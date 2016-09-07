@@ -260,12 +260,27 @@ public class CropView extends ImageView implements ViewTreeObserver.OnGlobalLayo
         mBaseMatrix.reset();
 
         // We limit up-scaling to 3x otherwise the result may look bad if it's a small icon
-        float widthScale = Math.min(viewWidth / w, 3.0f);
-        float heightScale = Math.min(viewHeight / h, 3.0f);
-        float scale = Math.min(widthScale, heightScale);
+        //float widthScale = Math.min(viewWidth / w, 3.0f);
+        //float heightScale = Math.min(viewHeight / h, 3.0f);
+        //float scale = Math.min(widthScale, heightScale);
+
+        /**
+         * 初始缩放改为适应短边
+         */
+        float scale;
+        if (w < h) {
+            scale = viewWidth / w;
+        } else {
+            scale = viewHeight / h;
+        }
 
         // Make the default size about 4/5 of the width or height
-        float cropWidth = Math.min(w, h) * 4 / 5 * scale;
+        //float cropWidth = Math.min(w, h) * 4 / 5 * scale;
+
+        /**
+         * 框选改为固定view宽的4/5
+         */
+        float cropWidth = getWidth() * 4 / 5;
         float cropHeight = cropWidth;
 
         if (mAspectX != 0 && mAspectY != 0) {
